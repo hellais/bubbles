@@ -531,8 +531,6 @@ def _(ctx, obj, key, measures=None, include_count=True,
 def _(ctx, obj, key, column_field, value_field):
 
     def iterator():
-        nonlocal keep_filter, transpose_filter, transpose_names
-
         for row in obj:
             keep = keep_filter(row)
             transposed = transpose_filter(row)

@@ -238,13 +238,10 @@ class Operation(object):
         return matches
 
 
-    def register(self, *signature, name=None):
+    def register(self, name=None, *signature):
         sig = None
 
         def register_function(func):
-            nonlocal sig
-            nonlocal name
-
             # TODO Test for non-keyword arguments for better error reporting
             func_sig = inspect.signature(func)
             if len(func_sig.parameters) < (1 + self.opcount):
@@ -257,7 +254,8 @@ class Operation(object):
             return func
 
         if signature and callable(signature[0]):
-            func, *signature = signature
+            func = signature[0]
+            signature = signature[1:]
 
             # Create default signature if none is provided
             if not signature:
@@ -280,8 +278,6 @@ def operation(*args):
     opcount = 1
 
     def decorator(func):
-        nonlocal opcount
-
         # No arguments, this is the decorator
         # Set default values for the arguments
         # Extract just parameter names (sig.parameters is a mapping)

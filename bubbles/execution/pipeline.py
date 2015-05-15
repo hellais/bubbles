@@ -314,7 +314,8 @@ class _PipelineOperation(object):
 
             # Get name of first (pipeline default) outlet and rest of the
             # operand outlets
-            firstoutlet, *restoutlets = operation.operands
+            firstoutlet = operation.operands[0]
+            restoutlets = operation.operands[1:]
 
             # Pipeline node - default
             node = Node(self.opname, *args, **kwargs)
